@@ -1,0 +1,23 @@
+# Contexto de empresa (se genera por bootstrap, específico de cada empresa)
+CLAUDE.md
+LEARNINGS.md
+CLAUDE.md.draft
+
+# Documentos generados (contienen info de proyectos)
+discovery-*.md
+discovery-validation-*.md
+prd-*.md
+historias-*.md
+pre-kickoff-*.md
+post-kickoff-*.md
+update-*.md
+one-pager-*.md
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+.idea/
+*.swp
