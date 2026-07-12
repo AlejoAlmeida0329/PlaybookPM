@@ -30,7 +30,7 @@ Antes de arrancar, en este orden:
    - Léelo y extrae:
      - Nombre del proyecto (para el título)
      - Requerimientos funcionales (RF-1, RF-2, ...) con su descripción y prioridad
-     - Reglas de negocio (para tenerlas presentes al escribir escenarios)
+     - Reglas de negocio (RN-1, RN-2, ...) con su enunciado y categoría — para tenerlas presentes al escribir escenarios y para trazabilidad
      - Métricas de éxito (para saber qué comportamiento del sistema hay que medir)
      - Terminología específica que aparezca en el PRD
 
@@ -221,7 +221,7 @@ Escenario: Recarga bloqueada por límite de compliance
 - **Monto concreto:** "$10.000.000 COP" — no dice "monto grande".
 - **Terminología de negocio:** "bandeja de compliance", "cliente", no "endpoint", "response 403", "user_id".
 - **Múltiples resultados verificables:** bloqueo, encolamiento, notificación, no débito — cada uno lo puede probar QA y lo puede construir desarrollo.
-- **Referencia implícita a la regla de negocio** del PRD (límite de $10M).
+- **Referencia explícita a la regla de negocio** del PRD (RN-2: límite de $10M). Al escribir el nombre del escenario o su contexto, se debe mencionar el ID de la regla que valida.
 
 ---
 
@@ -239,7 +239,7 @@ Antes de cerrar el documento de historias, verifica:
 
 ## Conexión con reglas de negocio
 
-Las reglas de negocio del PRD (sección 6) no se convierten en historias directamente — porque las reglas son restricciones inmutables, no comportamientos del sistema. Pero **las historias que existen por causa de una regla, o los escenarios que validan una regla, deben conectarse explícitamente**.
+Las reglas de negocio del PRD (sección 6) no se convierten en historias directamente — porque las reglas son restricciones inmutables, no comportamientos del sistema. Pero **las historias que existen por causa de una regla, o los escenarios que validan una regla, deben conectarse explícitamente usando el ID de la regla (RN-1, RN-2...)**.
 
 Hay 3 formas en que una regla se conecta con las historias:
 
@@ -248,29 +248,32 @@ Hay 3 formas en que una regla se conecta con las historias:
 La regla es tan importante que existe una historia específicamente para hacerla cumplir.
 
 **Ejemplo:**
-- **Regla:** "Ninguna transacción crossborder puede procesarse sin KYB completo del ordenante."
+- **RN-1:** "Ninguna transacción crossborder puede procesarse sin KYB completo del ordenante."
 - **H-4:** Como cliente empresarial, quiero completar el proceso de KYB antes de mi primera transacción crossborder, para que mis operaciones no queden bloqueadas.
+- **Trazabilidad:** H-4 → cubre RN-1 (completa).
 
 ### Forma 2 — Una regla se manifiesta como escenario dentro de una historia
 
 La historia cubre un comportamiento del usuario, y uno de sus escenarios Gherkin valida que la regla se cumpla.
 
 **Ejemplo:**
-- **Regla:** "Recargas sobre $10M requieren aprobación previa de compliance."
+- **RN-2:** "Recargas sobre $10M requieren aprobación previa de compliance."
 - **H-2:** Como cliente empresarial, quiero recargar mi cuenta desde el dashboard.
-- **Escenario dentro de H-2:** "Recarga bloqueada por límite de compliance" — valida la regla.
+- **Escenario dentro de H-2:** "Recarga bloqueada por límite de compliance" — valida RN-2.
+- **Trazabilidad:** H-2, escenario "Recarga bloqueada por límite" → cubre RN-2.
 
 ### Forma 3 — Una regla aplica transversalmente como precondición común
 
 Reglas globales que afectan muchas historias sin ser el motivo de ninguna. Se manejan como precondición común en el "Dado que".
 
 **Ejemplo:**
-- **Regla:** "Todo usuario debe estar autenticado para operar en la plataforma."
+- **RN-3:** "Todo usuario debe estar autenticado para operar en la plataforma."
 - **Aplicación:** Todas las historias que involucran operación tienen "Dado un usuario autenticado con sesión activa" en sus escenarios.
+- **Trazabilidad:** H-1, H-2, H-3 → cubren RN-3 como precondición.
 
 ### Regla de cobertura
 
-Por cada regla de negocio del PRD, decide cuál forma aplica y regístrala. **Si detectas una regla que no se cubre por ninguna de las 3 formas, es una alerta** — o la regla no aplica a esta feature (documéntalo), o hay un vacío en las historias (avisa al usuario).
+Por cada RN del PRD, decide cuál forma aplica y regístrala usando el ID de la regla. **Si detectas una RN que no se cubre por ninguna de las 3 formas, es una alerta** — o la regla no aplica a esta feature (documéntalo), o hay un vacío en las historias (avisa al usuario).
 
 ---
 
@@ -312,14 +315,14 @@ Por cada regla de negocio del PRD, decide cuál forma aplica y regístrala. **Si
 
 ### Cobertura de Reglas de Negocio
 
-Por cada regla de negocio del PRD, indicar cómo se cubre:
+Por cada RN del PRD, indicar cómo se cubre. Usar el ID persistente de la regla (RN-1, RN-2, ...):
 
-| Regla | Forma de cobertura | Referencia |
-|---|---|---|
-| Regla 1 (descripción corta) | Historia completa | H-4 |
-| Regla 2 (descripción corta) | Escenario dentro de historia | H-2, escenario "Recarga bloqueada por límite" |
-| Regla 3 (descripción corta) | Precondición transversal | Aplica en H-1, H-2, H-3 como "Dado un usuario autenticado" |
-| Regla 4 (descripción corta) | [NO CUBIERTA] | [alerta al usuario para revisión] |
+| Regla | Enunciado corto | Forma de cobertura | Referencia |
+|---|---|---|---|
+| RN-1 | KYB antes de crossborder | Historia completa | H-4 |
+| RN-2 | Límite $10M en recarga | Escenario dentro de historia | H-2, escenario "Recarga bloqueada por límite" |
+| RN-3 | Usuario autenticado | Precondición transversal | Aplica en H-1, H-2, H-3 como "Dado un usuario autenticado" |
+| RN-4 | [descripción corta] | [NO CUBIERTA] | [alerta al usuario para revisión] |
 
 ---
 
