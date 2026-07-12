@@ -163,12 +163,22 @@ Lista numerada. Cada requerimiento con:
 
 Reglas explícitas que deben cumplirse siempre, independiente de cómo se implemente.
 
+**Cada regla debe tener un ID persistente:** RN-1, RN-2, RN-3... (Regla de Negocio 1, 2, 3). Los IDs no se reutilizan ni se re-numeran cuando se agregan reglas nuevas — se van agregando secuencialmente para mantener trazabilidad histórica. Si una regla se elimina, su ID queda en el historial como "deprecada", no se recicla.
+
+Cada regla con:
+- **RN-[número]:** enunciado corto y accionable
+- **Categoría:** [SIEMPRE / NUNCA]
+- **Origen:** [CLAUDE.md sección X / discovery / captura en esta sesión]
+
 Ejemplos:
-- "Ninguna transacción crossborder puede procesarse sin KYB completo del ordenante."
-- "El monto máximo por transacción individual es X sin escalamiento."
-- "Cualquier usuario menor de 18 años no puede acceder al producto."
+
+- **RN-1:** Ninguna transacción crossborder puede procesarse sin KYB completo del ordenante. [SIEMPRE] · Origen: CLAUDE.md
+- **RN-2:** El monto máximo por transacción individual es $10M COP sin escalamiento a compliance. [NUNCA superar sin aprobación] · Origen: CLAUDE.md
+- **RN-3:** Cualquier usuario menor de 18 años no puede acceder al producto. [NUNCA] · Origen: CLAUDE.md
 
 Cruzar con la sección "Reglas de negocio y compliance" y "Casos sensibles" del `CLAUDE.md`. Si detectas contradicciones, señálalas.
+
+Estos IDs (RN-1, RN-2...) son los que las historias de usuario referencian en su sección de cobertura de reglas de negocio. Sin ID persistente, la trazabilidad se rompe.
 
 ### Sección 7 — Riesgos
 
@@ -320,7 +330,7 @@ Si esta sección tiene más de 5 items, avisa al usuario:
 [tabla o lista numerada]
 
 ## 6. Reglas de negocio
-[bullets marcados SIEMPRE / NUNCA]
+[Lista con IDs persistentes: RN-1, RN-2, RN-3... Cada una con categoría (SIEMPRE/NUNCA) y origen. Los IDs no se reciclan.]
 
 ## 7. Riesgos
 ### Producto
