@@ -101,9 +101,9 @@ Tres cosas se parecen pero no son lo mismo, y confundirlas es error común de PM
 ### Reglas de negocio
 
 - **Qué son:** restricciones inmutables del dominio del negocio. Existen independientemente de cualquier feature.
-- **Dónde viven:** sección 6 del PRD. Se repiten en cada feature que las toca.
+- **Dónde viven:** sección 6 del PRD, con ID persistente **RN-1, RN-2, RN-3...** Se repiten en cada feature que las toca y las historias las referencian por ID.
 - **Quién las usa:** todo el equipo (producto, ingeniería, QA, legal, comercial).
-- **Ejemplo:** "Ninguna recarga puede superar los $10M COP sin escalamiento a compliance."
+- **Ejemplo:** "RN-2: Ninguna recarga puede superar los $10M COP sin escalamiento a compliance."
 
 ### Requerimientos funcionales y criterios de aceptación
 
@@ -126,12 +126,12 @@ Tres cosas se parecen pero no son lo mismo, y confundirlas es error común de PM
 - ¿Es una **pregunta que se hace el PM** antes de arrancar ejecución? → Recordatorio de aprobación. NO va en el documento, es aviso conversacional.
 
 Una misma restricción puede expresarse en los 3 planos. Ejemplo del límite de $10M:
-- **Regla de negocio:** "Recargas sobre $10M requieren aprobación previa de compliance."
+- **Regla de negocio:** "RN-2: Recargas sobre $10M requieren aprobación previa de compliance."
 - **Requerimiento funcional:** "RF-7: El sistema bloquea recargas > $10M y las envía a cola."
-- **Criterio de aceptación Gherkin:** "Dado un usuario intentando recargar $15M, cuando confirma, entonces el sistema bloquea y notifica a compliance."
+- **Criterio de aceptación Gherkin (en H-2, valida RN-2):** "Dado un usuario intentando recargar $15M, cuando confirma, entonces el sistema bloquea y notifica a compliance."
 - **Recordatorio de aprobación:** "¿Confirmé con compliance el SLA de respuesta para estas colas?"
 
-Los cuatro dicen algo distinto de la misma restricción. No los confundas.
+Los cuatro dicen algo distinto de la misma restricción. Los IDs (RN-2, RF-7, H-2) son los que hacen posible la trazabilidad entre planos. No los confundas.
 
 ---
 
